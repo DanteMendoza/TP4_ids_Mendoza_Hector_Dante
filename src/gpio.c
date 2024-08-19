@@ -1,60 +1,61 @@
+/*!
+    \file gpio.c
+    \brief Implementación de las funciones de control de GPIO.
+    \author Hector Dante Mendoza
+    \date 2024-08-19
+*/
+
 #include "gpio.h"
-#include <stddef.h>
 
-#define USE_DYNAMIC_MEM
-
-#ifndef GPIO_MAX_INSTANCES
-#define GPIO_MAX_INSTANCES 10
-#endif
-
+// Definición interna de la estructura gpio_s
 struct gpio_s {
-    uint8_t port;
+    uint8_t puerto;
     uint8_t bit;
-    bool output;
-    bool used;
+    bool estado;
 };
 
-/**
- * @brief
- *
- * @return gpio_t
- */
-static gpio_t allocateInstance() {
-    static struct gpio_s instances[GPIO_MAX_INSTANCES] = {0};
-
-    gpio_t result = NULL;
-    for (int index = 0; index < GPIO_MAX_INSTANCES; index++) {
-        if (!instances[index].used) {
-            result = &instances[index].used;
-            result->used = true;
-            break;
-        }
-    }
-    return result;
-}
-
+/*!
+    \brief Crea un objeto GPIO.
+    \param puerto Número de puerto donde se encuentra el GPIO.
+    \param bit Número de bit del GPIO.
+    \return gpio_t Manejador al objeto GPIO creado.
+*/
 gpio_t gpioCreate(uint8_t puerto, uint8_t bit) {
-#ifdef USE_DYNAMIC_MEM
-    gpio_t self = malloc(sizeof(struct gpio_s));
-#else
-    gpio_t self = allocateInstance();
-#endif
-    if (self) {
-        self->port = puerto;
-        self->bit = bit;
-        self->output = false;
+    gpio_t nuevo_gpio = (gpio_t)malloc(sizeof(struct gpio_s));
+    if (nuevo_gpio != NULL) {
+        nuevo_gpio->puerto = puerto;
+        nuevo_gpio->bit = bit;
+        nuevo_gpio->estado = false;
     }
-    return self;
+    return nuevo_gpio;
 }
 
-void gpioSetOutput(gpio_t self, bool output) {
-    HAL_GPIO_SET_OUTPUT(self->port, self->bit);
+/*!
+    \brief Configura el GPIO como salida o entrada.
+    \param gpio Manejador al objeto GPIO.
+    \param output Establecer en true para salida, false para entrada.
+*/
+void gpioSetOutput(gpio_t gpio, bool output) {
+    // Aquí iría el código para configurar el GPIO como entrada o salida
+    gpio->estado = output;
 }
 
-void gpioSetState(gpio_t self, bool state) {
-    HAL_GPIO_SET_STATE(self->port, self->bit);
+/*!
+    \brief Establece el estado del GPIO.
+    \param gpio Manejador al objeto GPIO.
+    \param state Establecer en true para poner el GPIO en alto, false para ponerlo en bajo.
+*/
+void gpioSetState(gpio_t gpio, bool state) {
+    // Aquí iría el código para establecer el estado del GPIO
+    gpio->estado = state;
 }
 
-bool gpioGetState(gpio_t self) {
-    return HAL_GPIO_GET_STATE(self->port, self->bit);
+/*!
+    \brief Obtiene el estado actual del GPIO.
+    \param gpio Manejador al objeto GPIO.
+    \return bool Estado actual del GPIO (true si está en alto, false si está en bajo).
+*/
+bool gpioGetState(gpio_t gpio) {
+    // Aquí iría el código para obtener el estado actual del GPIO
+    return gpio->estado;
 }
