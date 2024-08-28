@@ -21,3 +21,9 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@rm -r $(OUT_DIR)
+	@rm -r doc/html
+	@rm -r doc/latex
+
+doc:
+	@echo Generando documentación con Doxygen
+	@doxygen Doxyfile
