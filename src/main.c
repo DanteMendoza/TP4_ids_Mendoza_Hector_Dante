@@ -12,41 +12,58 @@ portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
 NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
 OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 SPDX-License-Identifier: MIT
 *************************************************************************************************/
 
-/** @file main.c
- ** @brief Definición de la función principal del programa
- **/
+/**
+ * @file main.c
+ * @brief Definición de la función principal del programa
+ */
 
-/* === Headers files inclusions =============================================================== */
+ /* === Inclusión de archivos de cabecera ====================================================== */
 
 #include "main.h"
 #include "gpio.h"
 
-/* === Macros definitions ====================================================================== */
+/* === Definiciones de macros ================================================================= */
 
+/**
+ * @def LED_ROJO_PUERTO
+ * @brief Puerto al que está conectado el LED rojo.
+ */
 #define LED_ROJO_PUERTO 1
+
+/**
+ * @def LED_ROJO_BIT
+ * @brief Bit al que está conectado el LED rojo.
+ */
 #define LED_ROJO_BIT    7
 
-/* === Private data type declarations ========================================================== */
+/* === Declaraciones de tipos de datos privados ================================================= */
 
-/* === Private variable declarations =========================================================== */
+/* === Declaraciones de variables privadas ======================================================= */
 
-/* === Private function declarations =========================================================== */
+/* === Declaraciones de funciones privadas ======================================================= */
 
-/* === Public variable definitions ============================================================= */
+/* === Definiciones de variables públicas ========================================================= */
 
-/* === Private variable definitions ============================================================ */
+/* === Definiciones de variables privadas ========================================================= */
 
-/* === Private function implementation ========================================================= */
+/* === Implementación de funciones privadas ======================================================= */
 
-/* === Public function implementation ========================================================== */
+/* === Implementación de funciones públicas ======================================================== */
 
+/**
+ * @brief Función principal del programa.
+ *
+ * Configura el GPIO para controlar el LED rojo y enciende el LED.
+ *
+ * @return int Código de salida del programa.
+ */
 int main(void) {
     // Configuro como salida
     gpioSetDirection(LED_ROJO_PUERTO, LED_ROJO_BIT, true);
@@ -57,7 +74,9 @@ int main(void) {
     gpioSetOutput(led_rojo, true);
     gpioSetState(led_rojo, true);
 
-    led_rojo.gpioSetState(true)
+    led_rojo.gpioSetState(true);
+    
+    return 0;
 }
 
-/* === End of documentation ==================================================================== */
+/* === Fin de la documentación ==================================================================== */
